@@ -39,10 +39,14 @@ Class RelatoriosController extends Controller {
 					->where('proposta_enviada', '=', 'sim')
 					->count('proposta_enviada');
 
+		$nEventos = DB::table('agenda')
+					->count();
+
 		return view('info_relatorios')
 					->with('nleads', $nLeads)
 					->with('npropostas', $npropostas)
-					->with('mediageral', $mediaGeral);
+					->with('mediageral', $mediaGeral)
+					->with('nEventos', $nEventos);
 	}
 
 	public function relatorio_pesquisas(){
@@ -94,32 +98,32 @@ Class RelatoriosController extends Controller {
 		$countP14_1 = DB::table('Pesquisa_satisfacao')
 					->where('pergunta14', '=', '1')
 					->count('pergunta14');
-		$avgP14_1 = (100 * $countP14_1) / $countP14;
+		$avgP14_1 = (100 * $countP14_1 == 0 ? 0 : $countP14_1) / ($countP14 == 0 ? 1 : $countP14);
 
 		$countP14_2 = DB::table('Pesquisa_satisfacao')
 					->where('pergunta14', '=', '2')
 					->count('pergunta14');
-		$avgP14_2 = (100 * $countP14_2) / $countP14;
+		$avgP14_2 = (100 * $countP14_2 == 0 ? 0 : $countP14_2) / ($countP14 == 0 ? 1 : $countP14);
 
 		$countP14_3 = DB::table('Pesquisa_satisfacao')
 					->where('pergunta14', '=', '3')
 					->count('pergunta14');
-		$avgP14_3 = (100 * $countP14_3) / $countP14;
+		$avgP14_3 = (100 * $countP14_3 == 0 ? 0 : $countP14_3) / ($countP14 == 0 ? 1 : $countP14);
 
 		$countP14_4 = DB::table('Pesquisa_satisfacao')
 					->where('pergunta14', '=', '4')
 					->count('pergunta14');
-		$avgP14_4 = (100 * $countP14_4) / $countP14;
+		$avgP14_4 = (100 * $countP14_4 == 0 ? 0 : $countP14_4) / ($countP14 == 0 ? 1 : $countP14);
 
 		$countP14_5 = DB::table('Pesquisa_satisfacao')
 					->where('pergunta14', '=', '5')
 					->count('pergunta14');
-		$avgP14_5 = (100 * $countP14_5) / $countP14;
+		$avgP14_5 = (100 * $countP14_5 == 0 ? 0 : $countP14_5) / ($countP14 == 0 ? 1 : $countP14);
 
 		$countP14_6 = DB::table('Pesquisa_satisfacao')
 					->where('pergunta14', '=', '6')
 					->count('pergunta14');
-		$avgP14_6 = (100 * $countP14_6) / $countP14;
+		$avgP14_6 = (100 * $countP14_6 == 0 ? 0 : $countP14_6) / ($countP14 == 0 ? 1 : $countP14);
 
 		$pesquisas = new Pesquisa_satisfacao();
 		$pesquisas = DB::table('Pesquisa_satisfacao')
@@ -169,8 +173,8 @@ Class RelatoriosController extends Controller {
 					->where('situacao', '=', 'Reprovada')
 					->count('situacao');
 
-		$percentualAprovadas = ($nPropostasAprovadas * 100) / $nPropostas;
-		$percentualReprovadas = ($nPropostasReprovadas * 100) / $nPropostas;
+		$percentualAprovadas = (100 * $nPropostasAprovadas == 0 ? 0 : $nPropostasAprovadas) / ($nPropostas == 0 ? 1 : $nPropostas);
+		$percentualReprovadas = (100 * $nPropostasReprovadas == 0 ? 0 : $nPropostasReprovadas) / ($nPropostas == 0 ? 1 : $nPropostas);
 
 		$comentarios = Pesquisa_satisfacao_reprovada::all();
 
@@ -181,5 +185,9 @@ Class RelatoriosController extends Controller {
 					->with('comentarios', $comentarios);
 	}
 
+	function relatorio_agenda(){
+
+		return view('info_relatorios_agenda');
+	}
 
 }

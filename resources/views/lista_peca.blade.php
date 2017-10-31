@@ -56,7 +56,7 @@
                                         <tr>
                                             <td>{{ $p->nome}}</td>
                                             <td>{{ $p->descricao }}</td>
-                                            <td>{{ $p->valor }}</td>
+                                            <td>R$ {{ number_format($p->valor, 2, ',', '.') }}</td>
                                             <input type="hidden" id="campoDescricao" value="{{ $p->descricao }}">
                                             <td class="text-center">
                                                 <a href="#" data-toggle="modal" data-target="#myModal2" id="idModal"><i class="fa fa-pencil" style="color: #708090;"

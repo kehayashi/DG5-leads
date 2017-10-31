@@ -40,12 +40,12 @@
                                   <div class="small-box bg-yellow">
                                     <div class="inner">
                                       <h3 style="font-size: 18px;">Reuniões</h3>
-                                      <p>agendadas  <font style="font-size: 25px;"><b>0</b></font></p></p>
+                                      <p>agendadas  <font style="font-size: 25px;"><b>{{ $nEventos }}</b></font></p></p>
                                     </div>
                                     <div class="icon" style="font-size: 70px;">
                                       <i class="fa fa-calendar" ></i>
                                     </div>
-                                    <a href="#" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="/relatorios/agenda" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
                                   </div>
                                 </div>
                                 <!-- ./col -->

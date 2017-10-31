@@ -2,11 +2,12 @@
 
 @section('conteudo')
 
+
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>Pesquisa
-        <small>Informações da pesquisa</small>
+      <h1>
+        <small></small>
       </h1>
     </section>
 
@@ -23,8 +24,8 @@
             </div>
             <div class="col-lg-12">
                 <div class="text-center">
-                    <i class="fa fa-thumbs-o-up" style="color: #333;font-size: 200px;"></i><br>
-                    <label style="font-size: 35px;">Obrigado pela sua participação!</label>
+                    <i class="fa fa-frown-o" style="color: #333;font-size: 200px;"></i><br>
+                    <label style="font-size: 35px;">Você não tem permissão para acessar esta página!</label>
                 </div>
                 </section>
             </div>

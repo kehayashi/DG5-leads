@@ -82,7 +82,7 @@ Class PropostaController extends Controller {
 	}
 
 	public function info(){
-		$proposta = DB::select('SELECT  nome_empresa, proposta.proposta_id, titulo, data_emissao, situacao, proposta.proposta_enviada, proposta.pesquisa_enviada,
+		$proposta = DB::select('SELECT nome_empresa, proposta.proposta_id, titulo, data_emissao, situacao, proposta.proposta_enviada, proposta.pesquisa_enviada,
 									SUM(CASE WHEN situacao_item = "Aprovado" THEN valor ELSE 0 END) valor_total_aprovado,
 									SUM(valor) valor_total
 									FROM proposta, lead, item, proposta_item

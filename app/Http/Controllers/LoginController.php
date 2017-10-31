@@ -27,6 +27,8 @@ Class LoginController extends Controller {
 			Session::put('nome', $equipe->nome);
 			Session::put('sobrenome', $equipe->sobrenome);
 			Session::put('email', $equipe->email);
+			Session::put('cargo', $equipe->cargo);
+			Session::save();
 
 			return view('dashboard');
     }

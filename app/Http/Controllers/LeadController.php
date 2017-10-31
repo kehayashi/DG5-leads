@@ -379,6 +379,7 @@ Class LeadController extends Controller {
 		$lead->observacoes = $request->observacoes;
 		$lead->filtro1 = $request->filtro1;
 		$lead->filtro2 = $request->filtro2;
+		$lead->classificacao_reuniao = $request->classificacao_reuniao;
 		$lead->save();
 
 		$numContatos = count($request->contato_id);

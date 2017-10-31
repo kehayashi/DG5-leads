@@ -8,7 +8,7 @@ Route::get('/', function () {
 
 Route::post('/login/entrar', 'LoginController@logar');
 
-Route::get('/login/logout', 'LoginController@logout');
+Route::get('/login/logout', 'LoginController@logout')->middleware('checksession');
 
 //-------------------- END LOGIN ---------------------------
 
@@ -16,25 +16,29 @@ Route::get('/login/logout', 'LoginController@logout');
 
 //---------------------- EQUIPE ----------------------------
 
-Route::get('/equipe', 'EquipeController@lista');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/equipe/crud', 'EquipeController@lista');
+    Route::get('/equipe', 'EquipeController@lista')->middleware('checkcargo');
 
-Route::get('/equipe/crud', 'EquipeController@novoPreVendedor');
+    Route::get('/equipe/crud', 'EquipeController@novoPreVendedor')->middleware('checkcargo');
 
-Route::get('/equipe/form_reset', 'EquipeController@formRedefinirSenha');
+    Route::get('/equipe/crud/delete/{equipe_id}', 'EquipeController@deletaEquipe')->middleware('checkcargo');
 
-Route::post('/equipe/reset', 'EquipeController@redefinirSenha');
+    Route::get('/equipe/crud/update/{equipe_id}', 'EquipeController@membroEquipeAtualizar')->middleware('checkcargo');
 
-Route::get('/equipe/crud/delete/{equipe_id}', 'EquipeController@deletaEquipe');
+    Route::post('/equipe/crud', 'EquipeController@novoPreVendedor')->middleware('checkcargo');
 
-Route::get('/equipe/crud/update/{equipe_id}', 'EquipeController@membroEquipeAtualizar');
+    Route::post('/equipe/cadastrar', 'EquipeController@cadastraEquipe')->middleware('checkcargo');
 
-Route::post('/equipe/crud', 'EquipeController@novoPreVendedor');
+    Route::post('/equipe/atualiza', 'EquipeController@atualizaEquipe')->middleware('checkcargo');
 
-Route::post('/equipe/cadastrar', 'EquipeController@cadastraEquipe');
+    Route::get('/equipe/crud', 'EquipeController@lista')->middleware('checkcargo');
 
-Route::post('/equipe/atualiza', 'EquipeController@atualizaEquipe');
+    Route::get('/equipe/form_reset', 'EquipeController@formRedefinirSenha');
+
+    Route::post('/equipe/reset', 'EquipeController@redefinirSenha');
+
+});
 
 //---------------------- END EQUIPE--------------------------
 
@@ -42,17 +46,21 @@ Route::post('/equipe/atualiza', 'EquipeController@atualizaEquipe');
 
 //----------------------- ORIGEM ----------------------------
 
-Route::get('/origem', 'OrigemController@lista');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/origem/crud/delete/{origem_id}', 'OrigemController@deletaOrigem');
+    Route::get('/origem', 'OrigemController@lista');
 
-Route::get('/origem/update', 'OrigemController@atualizaOrigem');
+    Route::get('/origem/crud/delete/{origem_id}', 'OrigemController@deletaOrigem');
 
-Route::post('/origem/update', 'OrigemController@atualizaOrigem');
+    Route::get('/origem/update', 'OrigemController@atualizaOrigem');
 
-Route::post('origem/cadastrar', 'OrigemController@cadastraOrigem');
+    Route::post('/origem/update', 'OrigemController@atualizaOrigem');
 
-Route::post('/origem/cadastrar/form_lead', 'OrigemController@cadastrarFormLead');
+    Route::post('origem/cadastrar', 'OrigemController@cadastraOrigem');
+
+    Route::post('/origem/cadastrar/form_lead', 'OrigemController@cadastrarFormLead');
+
+});
 
 //----------------------- END ORIGEM -------------------------
 
@@ -60,21 +68,25 @@ Route::post('/origem/cadastrar/form_lead', 'OrigemController@cadastrarFormLead')
 
 //----------------------- PEÇA ----------------------------
 
-Route::get('/peca', 'PecaController@lista');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/peca/lista', 'PecaController@listaAjax');
+    Route::get('/peca', 'PecaController@lista');
 
-Route::get('/peca/getPecaAjax', 'PecaController@getPecaAjax');
+    Route::get('/peca/lista', 'PecaController@listaAjax');
 
-Route::get('/peca/crud/delete/{peca_id}', 'PecaController@deletaPeca');
+    Route::get('/peca/getPecaAjax', 'PecaController@getPecaAjax');
 
-Route::get('/peca/update', 'PecaController@atualizaPeca');
+    Route::get('/peca/crud/delete/{peca_id}', 'PecaController@deletaPeca');
 
-Route::post('/peca/update', 'PecaController@atualizaPeca');
+    Route::get('/peca/update', 'PecaController@atualizaPeca');
 
-Route::post('/peca/cadastrar', 'PecaController@cadastraPeca');
+    Route::post('/peca/update', 'PecaController@atualizaPeca');
 
-Route::post('/peca/cadastrar/formProposta', 'PecaController@cadastrarFormProposta');
+    Route::post('/peca/cadastrar', 'PecaController@cadastraPeca');
+
+    Route::post('/peca/cadastrar/formProposta', 'PecaController@cadastrarFormProposta');
+
+});
 
 //----------------------- END ORIGEM -------------------------
 
@@ -82,17 +94,21 @@ Route::post('/peca/cadastrar/formProposta', 'PecaController@cadastrarFormPropost
 
 //----------------------- MERCADO ----------------------------
 
-Route::get('/mercado', 'MercadoController@lista');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/mercado/crud/delete/{mercado_id}', 'MercadoController@deletaMercado');
+    Route::get('/mercado', 'MercadoController@lista');
 
-Route::get('/mercado/update', 'MercadoController@atualizaMercado');
+    Route::get('/mercado/crud/delete/{mercado_id}', 'MercadoController@deletaMercado');
 
-Route::post('/mercado/update', 'MercadoController@atualizaMercado');
+    Route::get('/mercado/update', 'MercadoController@atualizaMercado');
 
-Route::post('/mercado/cadastrar', 'MercadoController@cadastraMercado');
+    Route::post('/mercado/update', 'MercadoController@atualizaMercado');
 
-Route::post('/mercado/cadastrar/form_lead', 'MercadoController@cadastrarFormLead');
+    Route::post('/mercado/cadastrar', 'MercadoController@cadastraMercado');
+
+    Route::post('/mercado/cadastrar/form_lead', 'MercadoController@cadastrarFormLead');
+
+});
 
 //----------------------- END MERCADO  ------------------------
 
@@ -100,21 +116,25 @@ Route::post('/mercado/cadastrar/form_lead', 'MercadoController@cadastrarFormLead
 
 //----------------------- PRODUTO_LEAD -------------------------
 
-Route::get('/produto_lead', 'Produto_leadController@lista');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/produto_lead/lista', 'Produto_leadController@listaAjax');
+    Route::get('/produto_lead', 'Produto_leadController@lista');
 
-Route::get('/produto_lead/crud/delete/{produto_lead_id}', 'Produto_leadController@deletaProdutoLead');
+    Route::get('/produto_lead/lista', 'Produto_leadController@listaAjax');
 
-Route::get('/produto_lead/update', 'Produto_leadController@atualizaProdutoLead');
+    Route::get('/produto_lead/crud/delete/{produto_lead_id}', 'Produto_leadController@deletaProdutoLead');
 
-Route::post('/produto_lead/update', 'Produto_leadController@atualizaProdutoLead');
+    Route::get('/produto_lead/update', 'Produto_leadController@atualizaProdutoLead');
 
-Route::post('/produto_lead/cadastrar', 'Produto_leadController@cadastraProdutoLead');
+    Route::post('/produto_lead/update', 'Produto_leadController@atualizaProdutoLead');
 
-Route::post('/produto_lead/cadastrar/form_lead', 'Produto_leadController@cadastrarFormLead');
+    Route::post('/produto_lead/cadastrar', 'Produto_leadController@cadastraProdutoLead');
 
-Route::post('/produto_lead/cadastrar/formProposta', 'Produto_leadController@cadastrarFormProposta');
+    Route::post('/produto_lead/cadastrar/form_lead', 'Produto_leadController@cadastrarFormLead');
+
+    Route::post('/produto_lead/cadastrar/formProposta', 'Produto_leadController@cadastrarFormProposta');
+
+});
 
 //--------------------- END PRODUTO_LEAD -----------------------
 
@@ -122,25 +142,29 @@ Route::post('/produto_lead/cadastrar/formProposta', 'Produto_leadController@cada
 
 //--------------------------- LEAD -----------------------------
 
-Route::get('/lead', 'LeadController@form');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/lead/lista', 'LeadController@listaSelect');
+    Route::get('/lead', 'LeadController@form');
 
-Route::get('/lead/listaContatos', 'LeadController@listaContatosSelect');
+    Route::get('/lead/lista', 'LeadController@listaSelect');
 
-Route::get('/lead/cadastrar', 'LeadController@cadastraLead');
+    Route::get('/lead/listaContatos', 'LeadController@listaContatosSelect');
 
-Route::get('/lead/base', 'LeadController@lista');
+    Route::get('/lead/cadastrar', 'LeadController@cadastraLead');
 
-Route::get('/lead/info/{lead_id}', 'LeadController@info');
+    Route::get('/lead/base', 'LeadController@lista');
 
-Route::get('/lead/timeline/{lead_id}', 'LeadController@cadastraComentario');
+    Route::get('/lead/info/{lead_id}', 'LeadController@info');
 
-Route::get('/lead/update/{lead_id}', 'LeadController@formAtualizaLead');
+    Route::get('/lead/timeline/{lead_id}', 'LeadController@cadastraComentario');
 
-Route::get('/lead/delete/{lead_id}', 'LeadController@deletaLead');
+    Route::get('/lead/update/{lead_id}', 'LeadController@formAtualizaLead');
 
-Route::post('/lead/update', 'LeadController@atualizaLead');
+    Route::get('/lead/delete/{lead_id}', 'LeadController@deletaLead');
+
+    Route::post('/lead/update', 'LeadController@atualizaLead');
+
+});
 
 //------------------------  END LEAD ---------------------------
 
@@ -148,19 +172,23 @@ Route::post('/lead/update', 'LeadController@atualizaLead');
 
 //--------------------------- PROPOSTA ----------------------------
 
-Route::get('/proposta', 'PropostaController@form');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/proposta/lista', 'PropostaController@info');
+    Route::get('/proposta', 'PropostaController@form');
 
-Route::get('/proposta/download_pdf/{proposta_id}', 'PDFController@downloadPropostaPDF');
+    Route::get('/proposta/lista', 'PropostaController@info');
 
-Route::get('/proposta/stream_pdf/{proposta_id}', 'PDFController@streamPropostaPDF');
+    Route::get('/proposta/download_pdf/{proposta_id}', 'PDFController@downloadPropostaPDF');
 
-Route::get('/proposta/send_email/{proposta_id}', 'EmailController@enviarProposta');
+    Route::get('/proposta/stream_pdf/{proposta_id}', 'PDFController@streamPropostaPDF');
 
-Route::get('/proposta/send_pesquisa/{proposta_id}', 'EmailController@enviarPesquisa');
+    Route::get('/proposta/send_email/{proposta_id}', 'EmailController@enviarProposta');
 
-Route::post('/proposta/cadastrar', 'PropostaController@cadastraProposta');
+    Route::get('/proposta/send_pesquisa/{proposta_id}', 'EmailController@enviarPesquisa');
+
+    Route::post('/proposta/cadastrar', 'PropostaController@cadastraProposta');
+
+});
 
 //------------------------ END PROPOSTA ---------------------------
 
@@ -168,7 +196,7 @@ Route::post('/proposta/cadastrar', 'PropostaController@cadastraProposta');
 
 //--------------------------- CONTATOS ----------------------------
 
-Route::get('/contatos', 'ContatosController@listaContatosSelect');
+Route::get('/contatos', 'ContatosController@listaContatosSelect')->middleware('checksession');
 
 //------------------------ END CONTATOS ---------------------------
 
@@ -176,7 +204,7 @@ Route::get('/contatos', 'ContatosController@listaContatosSelect');
 
 //--------------------------- REDE_SOCIAL ---------------------------
 
-Route::post('/rede_social/cadastrar/form_lead', 'Rede_socialController@cadastraRede_Social');
+Route::post('/rede_social/cadastrar/form_lead', 'Rede_socialController@cadastraRede_Social')->middleware('checksession');
 
 //------------------------- END REDE_SOCIAL -------------------------
 
@@ -184,7 +212,7 @@ Route::post('/rede_social/cadastrar/form_lead', 'Rede_socialController@cadastraR
 
 //--------------------------- EMAIL ----------------------------
 
-Route::get('/email', 'EmailController@testeMail');
+Route::get('/email', 'EmailController@testeMail')->middleware('checksession');
 
 //------------------------ END EMAIL ---------------------------
 
@@ -203,27 +231,17 @@ Route::get('/email', 'EmailController@testeMail');
 
 //-------------------------- PESQUISA --------------------------
 
-Route::get('/pesquisa/aprovada', 'PesquisaController@formPesquisaAprovada');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/pesquisa/reprovada', 'PesquisaController@formPesquisaReprovada');
+    Route::get('/pesquisa/aprovada', 'PesquisaController@formPesquisaAprovada');
 
-Route::post('/pesquisa/cadastrar', 'PesquisaController@cadastraPesquisaAprovada');
+    Route::get('/pesquisa/reprovada', 'PesquisaController@formPesquisaReprovada');
 
-Route::post('/pesquisa/reprovada/cadastrar', 'PesquisaController@cadastraPesquisaReprovada');
+    Route::post('/pesquisa/cadastrar', 'PesquisaController@cadastraPesquisaAprovada');
 
-//----------------------- END PESQUISA --------------------------
+    Route::post('/pesquisa/reprovada/cadastrar', 'PesquisaController@cadastraPesquisaReprovada');
 
-
-
-//-------------------------- PESQUISA --------------------------
-
-Route::get('/relatorios', 'RelatoriosController@form');
-
-Route::get('/relatorios/pesquisas', 'RelatoriosController@relatorio_pesquisas');
-
-Route::get('/relatorios/leads', 'RelatoriosController@relatorio_leads');
-
-Route::get('/relatorios/propostas', 'RelatoriosController@relatorio_propostas_enviadas');
+});
 
 //----------------------- END PESQUISA --------------------------
 
@@ -231,7 +249,28 @@ Route::get('/relatorios/propostas', 'RelatoriosController@relatorio_propostas_en
 
 //-------------------------- PESQUISA --------------------------
 
-Route::get('/dashboard', 'DashboardController@info');
+Route::group(['middleware' => ['checksession']], function(){
+
+    Route::get('/relatorios', 'RelatoriosController@form');
+
+    Route::get('/relatorios/pesquisas', 'RelatoriosController@relatorio_pesquisas');
+
+    Route::get('/relatorios/leads', 'RelatoriosController@relatorio_leads');
+
+    Route::get('/relatorios/propostas', 'RelatoriosController@relatorio_propostas_enviadas');
+
+    Route::get('/relatorios/agenda', 'RelatoriosController@relatorio_agenda');
+
+});
+
+
+//----------------------- END PESQUISA --------------------------
+
+
+
+//-------------------------- PESQUISA --------------------------
+
+Route::get('/dashboard', 'DashboardController@info')->middleware('checksession');
 
 //----------------------- END PESQUISA --------------------------
 
@@ -239,12 +278,18 @@ Route::get('/dashboard', 'DashboardController@info');
 
 //-------------------------- AGENDA --------------------------
 
-Route::get('/agenda', 'AgendaController@info');
+Route::group(['middleware' => ['checksession']], function(){
 
-Route::get('/agenda/lista', 'AgendaController@lista');
+    Route::get('/agenda', 'AgendaController@info');
 
-Route::post('/agenda/cadastrar', 'AgendaController@cadastraEvento');
+    Route::get('/agenda/lista', 'AgendaController@lista');
 
+    Route::post('/agenda/cadastrar', 'AgendaController@cadastraEvento');
 
+    Route::get('/agenda/excluir/{agenda_id}', 'AgendaController@excluirEvento');
+
+    Route::post('/agenda/alterar/{agenda_id}', 'AgendaController@alterarEvento');
+
+});
 
 //----------------------- END PESQUISA --------------------------

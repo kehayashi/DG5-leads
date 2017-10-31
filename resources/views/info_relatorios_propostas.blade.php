@@ -108,8 +108,8 @@
                                           <i class="btn btn-danger" style="font-size: 12px; width: 150px;">Reprovada</i>
                                         @endif
                                       </td>
-                                      <td class="sorting_1 text-center">R$ {{ $p->valor_total_aprovado }}</td>
-                                      <td class="sorting_1 text-center">R$ {{ $p->valor_total }}</td>
+                                      <td class="sorting_1 text-center">R$ {{ number_format($p->valor_total_aprovado, 2, ',', '.') }}</td>
+                                      <td class="sorting_1 text-center">R$ {{ number_format($p->valor_total, 2, ',', '.') }}</td>
                                       <td class="text-center">
                                           <a href="/proposta/download_pdf/{{ $p->proposta_id }}"><i class="fa fa-download" style="font-size: 18px;"></i></a>
                                       </td>

@@ -11,21 +11,37 @@
     </section>
 
     <br>
-    <div class="row">
-      <div class="col-md-12">
-        @if((old('titulo')) && (count($errors) <= 0))
-           <div class="alert alert-success">
-               <i class="fa fa-check"></i> <b>Evento {{ old('titulo') }}</b> foi cadastrado com sucesso!
-               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-           </div>
-       @endif
-      </div>
-    </div>
+
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
+              <div class="row">
+                <div class="col-md-12">
+                  @if((old('titulo')) && (count($errors) <= 0))
+                     <div class="alert alert-success">
+                         <i class="fa fa-check"></i> <b>Evento {{ old('titulo') }}</b> foi cadastrado com sucesso!
+                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                     </div>
+                 @endif
+                </div>
+              </div>
+
+              @if(isset($deletado))
+              <div class="alert alert-success">
+                  <i class="fa fa-check"></i> Evento foi excluído com sucesso!
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
+              @endif
+
+              @if(isset($alterado))
+              <div class="alert alert-success">
+                  <i class="fa fa-check"></i> Evento foi excluído com sucesso!
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
+              @endif
+
               <div class="box box-warning">
                   <div class="box-header with-border">
                       <div class="box-body">
@@ -53,7 +69,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Cadastro de novo evento</h4>
+          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-calendar"></i> Cadastro de novo evento</h4>
         </div>
       <form action="/agenda/cadastrar" method="post">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -162,6 +178,8 @@
                               <!-- END COL -->
                             </div>
                             <!-- END ROW -->
+
+                            <br />
                             <div class="row">
                               <div class="col-md-12">
                                 <label>Titulo:</label>
@@ -170,6 +188,23 @@
                               <!-- END COL -->
                             </div>
                             <!-- END ROW -->
+
+                            <br />
+                            <div class="row">
+                              <div class="col-md-12">
+                                <label>Lead:</label>
+                                <select class="form-control" name="lead_id">
+                                  <option value="null">Selecione</option>
+                                  @foreach($leads as $l)
+                                    <<option value="{{ $l->lead_id }}">{{ $l->nome_empresa }}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+                              <!-- END COL -->
+                            </div>
+                            <!-- END ROW -->
+
+                            <br />
                             <div class="row">
                               <div class="col-md-12">
                                 <label>Descrição:</label>
@@ -179,70 +214,30 @@
                             </div>
                             <!-- END ROW -->
 
+                            <br />
                             <div class="row">
                               <div class="col-md-12">
-                                <label>Cor do evento:</label>
-                              </div>
-                            </div>
-                            <!-- END ROW -->
-
-                            <div class="row">
-                              <div class="col-md-2">
-                                <div class="input-group">
-                                  <span class="input-group-addon">
-                                    <input type="radio" name="checkcor" value="1">
-                                  </span>
-                                  <input type="text" class="form-control input-sm" name="cor1" style="background-color: #f56954; color: #f56954;" value="#f56954">
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="input-group">
-                                  <span class="input-group-addon">
-                                    <input type="radio" name="checkcor" value="2">
-                                  </span>
-                                  <input type="text" class="form-control input-sm" name="cor2" style="background-color: #f39c12; color: #f39c12" value="#f39c12">
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="input-group">
-                                  <span class="input-group-addon">
-                                    <input type="radio" name="checkcor" value="3">
-                                  </span>
-                                  <input type="text" class="form-control input-sm" name="cor3" style="background-color: #0073b7; color: #0073b7" value="#0073b7">
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="input-group">
-                                  <span class="input-group-addon">
-                                    <input type="radio" name="checkcor" value="4">
-                                  </span>
-                                  <input type="text" class="form-control input-sm" name="cor4" style="background-color: #00c0ef; color: #00c0ef" value="#0073b7">
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="input-group">
-                                  <span class="input-group-addon">
-                                    <input type="radio" name="checkcor" value="5">
-                                  </span>
-                                  <input type="text" class="form-control input-sm" name="cor5" style="background-color: #00a65a; color:#00a65a" value="#00a65a">
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="input-group">
-                                  <span class="input-group-addon">
-                                    <input type="radio" name="checkcor" value="6">
-                                  </span>
-                                  <input type="text" class="form-control input-sm" name="cor6" style="background-color: #8B658B; color:#8B658B;" value="#8B658B">
-                                </div>
+                                <label>Tipo (plataforma):</label>
+                                  <select class="form-control" name="tipo_plataforma">
+                                    <option value="null">Selecione</option>
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Telefone">Telefone</option>
+                                    <option value="Skype">Skype</option>
+                                  </select>
                               </div>
                               <!-- END COL -->
                             </div>
+                            <!-- END ROW -->
                           </div>
                           <!-- END FORM GROUP -->
                       </div>
+                      <!-- END box body -->
                   </div>
+                  <!-- end box-header -->
               </div>
+              <!-- end box-warning-->
           </div>
+          <!-- end modal body -->
           <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-success">Cadastrar</button>
@@ -252,6 +247,198 @@
     </div>
   </div>
 
+
+
+<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+  <form action="#" method="post" id="form_alterar">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4>
+          <i class="fa fa-calendar"></i>
+          <span class="modal-title" id="title"></span>
+        </h4>
+      </div>
+        <div class="modal-body" id="modalBody">
+        @if (count($errors) > 0)
+           <div class="alert alert-danger">
+                <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+                </ul>
+            </div>
+        @endif
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h1 class="box-title">Evento <small>informações</small></h1>
+                    <div class="box-body">
+                        <div class="form-group-row">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>Data inicio:</label>
+                              <input type="text" class="form-control" name="data_inicio2" id="data_inicio2"/>
+                            </div>
+                            <div class="col-md-3">
+                              <label>Data fim:</label>
+                              <input type="text" class="form-control" name="data_fim2" id="data_fim2" />
+                            </div>
+                            <!-- END COL -->
+                            <div class="col-md-3">
+                              <label>Hora inicio:</label>
+                              <select class="form-control" name="hora_inicio2" id="hora_inicio2">
+                                <option value="null">Selecione</option>
+                                <option value="07:00">07:00</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="20:30">21:00</option>
+                                <option value="20:30">21:30</option>
+                                <option value="20:30">22:00</option>
+                                <option value="20:30">22:30</option>
+                              </select>
+                            </div>
+                            <!-- END COL -->
+                            <div class="col-md-3">
+                              <label>Hora fim:</label>
+                              <select class="form-control" name="hora_fim2" id="hora_fim2">
+                                <option value="null">Selecione</option>
+                                <option value="07:00">07:00</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="20:30">21:00</option>
+                                <option value="20:30">21:30</option>
+                                <option value="20:30">22:00</option>
+                                <option value="20:30">22:30</option>
+                              </select>
+                            </div>
+                            <!-- END COL -->
+                          </div>
+                          <!-- END ROW -->
+
+                          <br/>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label>Titulo:</label>
+                              <input type="text" class="form-control" name="titulo2" id="titulo2"/>
+                            </div>
+                            <!-- END COL -->
+                          </div>
+                          <!-- END ROW -->
+
+                          <br />
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label>Lead:</label>
+                              <select class="form-control" name="lead_id2" id="lead_id2">
+                                <option value="null">Selecione</option>
+                                @foreach($leads as $l)
+                                  <<option value="{{ $l->lead_id }}">{{ $l->nome_empresa }}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <!-- END COL -->
+                          </div>
+                          <!-- END ROW -->
+
+                          <br/>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label>Descrição:</label>
+                              <textarea class="form-control" rows="4" cols="1000" name="descricao2" id="descricao2"></textarea>
+                            </div>
+                            <!-- END COL -->
+                          </div>
+                          <!-- END ROW -->
+
+                          <br/>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label>Tipo (plataforma):</label>
+                                <select class="form-control" name="tipo_plataforma2" id="tipo_plataforma2">
+                                  <option value="null">Selecione</option>
+                                  <option value="Presencial">Presencial</option>
+                                  <option value="Telefone">Telefone</option>
+                                  <option value="Skype">Skype</option>
+                                </select>
+                            </div>
+                            <!-- END COL -->
+                          </div>
+                          <!-- END ROW -->
+                        </div>
+                        <!-- END FORM GROUP -->
+                    </div>
+                    <!-- END box body -->
+                </div>
+                <!-- end box-header -->
+            </div>
+            <!-- end box-warning-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+            <a href="#" id="excluir"><button type="button" class="btn btn-danger">Excluir</button></a>
+            <button type="submit" class="btn btn-success">Atualizar</button>
+        </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+<script src="{{ asset("bower_components/adminLTE/plugins/fullcalendar/gcal.js") }}"></script>
+
   <script type="text/javascript">
       $('input[name="data_inicio"]').daterangepicker({
           locale: {
@@ -260,7 +447,7 @@
           singleDatePicker: true,
           showDropdowns: true,
           format: 'YYYY/MM/DD'
-          });
+      });
   </script>
 
   <script type="text/javascript">
@@ -271,7 +458,29 @@
           singleDatePicker: true,
           showDropdowns: true,
           format: 'YYYY/MM/DD'
-          });
+      });
+  </script>
+
+  <script type="text/javascript">
+      $('input[name="data_inicio2"]').daterangepicker({
+          locale: {
+            format: 'YYYY/MM/DD'
+          },
+          singleDatePicker: true,
+          showDropdowns: true,
+          format: 'YYYY/MM/DD'
+      });
+  </script>
+
+  <script type="text/javascript">
+      $('input[name="data_fim2"]').daterangepicker({
+          locale: {
+            format: 'YYYY/MM/DD'
+          },
+          singleDatePicker: true,
+          showDropdowns: true,
+          format: 'YYYY/MM/DD'
+      });
   </script>
 
   <script>
@@ -311,66 +520,61 @@
         m = date.getMonth(),
         y = date.getFullYear();
     $('#calendar').fullCalendar({
+      googleCalendarApiKey: 'AIzaSyDBQRJZbdWX9py5xVgzCzKaEW12CjSFxuU',
+
+      monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+              monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+              dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+              dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+
       header: {
         left: 'prev,next today',
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
       buttonText: {
-        today: 'today',
-        month: 'month',
-        week: 'week',
-        day: 'day'
+        today: 'Hoje',
+        month: 'mês',
+        week: 'semana',
+        day: 'dia'
       },
       //Random default events
-      events: [
-        {
-          title: 'All Day Event',
-          start: new Date(y, m, 1),
-          backgroundColor: "#f56954", //red
-          borderColor: "#f56954" //red
-        },
-        {
-          title: 'Long Event',
-          start: new Date(y, m, d - 5),
-          end: new Date(y, m, d - 2),
-          backgroundColor: "#f39c12", //yellow
-          borderColor: "#f39c12" //yellow
-        },
-        {
-          title: 'Meeting',
-          start: new Date(y, m, d, 10, 30),
-          allDay: false,
-          backgroundColor: "#0073b7", //Blue
-          borderColor: "#0073b7" //Blue
-        },
-        {
-          title: 'Lunch',
-          start: new Date(y, m, d, 12, 0),
-          end: new Date(y, m, d, 14, 0),
-          allDay: false,
-          backgroundColor: "#00c0ef", //Info (aqua)
-          borderColor: "#00c0ef" //Info (aqua)
-        },
-        {
-          title: 'Birthday Party',
-          start: new Date(y, m, d + 1, 19, 0),
-          end: new Date(y, m, d + 1, 22, 30),
-          allDay: false,
-          backgroundColor: "#00a65a", //Success (green)
-          borderColor: "#00a65a" //Success (green)
-        },
-        {
-          title: 'Click for Google',
-          start: new Date(y, m, 28),
-          end: new Date(y, m, 29),
-          url: 'http://google.com/',
-          backgroundColor: "#3c8dbc", //Primary (light-blue)
-          borderColor: "#3c8dbc" //Primary (light-blue)
-        }
-      ],
-      editable: true,
-      droppable: true, // this allows things to be dropped onto the calendar !!!
+
+      events: '/agenda/lista', function(event, jsEvent, view){
+      },
+
+      eventRender: function(event, element) {
+        var moment1 = moment(event.start).format('HH:mm');
+        var moment2 = moment(event.end).format('HH:mm');
+        $(element).tooltip({
+          title: 'Título: ' + event.title + ', Descrição: ' + event.description + ', Horario: ' + moment1 +
+          ', Plataforma: ' + event.type
+        });
+      },
+
+      eventClick: function(event, jsEvent, view) {
+        var  moment1 = moment(event.start).format('HH:mm');
+        var  moment2 = moment(event.start).format('YYYY-MM-DD');
+        var  moment3 = moment(event.end).format('HH:mm');
+        var  moment4 = moment(event.end).format('YYYY-MM-DD');
+
+           $('#title').html(event.title);
+           $('#data_inicio2').val(moment2);
+           $('#data_fim2').val(moment4);
+           $('#hora_inicio2').val(moment1);
+           $('#hora_fim2').val(moment3);
+           $('#titulo2').val(event.title);
+           $('#lead_id2').val(event.lead_id);
+           $('#descricao2').val(event.description);
+           $('#tipo_plataforma2').val(event.type);
+           $('#excluir').attr("href", "/agenda/excluir/"+event.id);
+           $('#form_alterar').attr("action", "/agenda/alterar/"+event.id);
+           $('#calendarModal').modal('show');
+
+       },
+
+      editable: false,
+      droppable: false, // this allows things to be dropped onto the calendar !!!
       drop: function (date, allDay) { // this function is called when something is dropped
 
         // retrieve the dropped element's stored Event Object
@@ -431,4 +635,5 @@
     });
   });
 </script>
+
 @stop

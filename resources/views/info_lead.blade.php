@@ -142,6 +142,34 @@
                                     </select>
                                   </td>
                                 </tr>
+                                <tr>
+                                  <td><label>Classificacao da reunião:</label></td>
+                                  <td class="text-center">
+                                    <select class="form-control" name="classificacao_reuniao" disabled>
+                                      <option value="null">Selecione</option>
+                                      @if( $lead->classificacao_reuniao == "N/A")
+                                      <option value="N/A" selected>N/A</option>
+                                      @else
+                                      <option value="N/A">N/A</option>
+                                      @endif
+                                      @if( $lead->classificacao_reuniao == "Frio")
+                                      <option value="Frio" selected>Frio</option>
+                                      @else
+                                      <option value="Frio">Frio</option>
+                                      @endif
+                                      @if( $lead->classificacao_reuniao == "Quente")
+                                      <option value="Quente" selected>Quente</option>
+                                      @else
+                                      <option value="Quente">Quente</option>
+                                      @endif
+                                      @if( $lead->classificacao_reuniao == "Muito quente")
+                                      <option value="Muito quente" selected="">Muito quente</option>
+                                      @else
+                                      <option value="Muito quente">Muito quente</option>
+                                      @endif
+                                    </select>
+                                  </td>
+                                </tr>
                               </table>
                               <hr style="color: #f39c12; background-color: #f39c12;">
                               <h1 class="box-title"><i class="fa fa-commenting"></i> Contato</h1>
@@ -196,7 +224,7 @@
                             <button class="btn btn-success pull-right"><i class="fa fa-commenting"></i> Comentar</button>
                             <br><br><hr style="color: #f39c12; background-color: #f39c12;">
                           </form>
-                            <div class="container-fluid" style="overflow: scroll; height: 590px;">
+                            <div class="container-fluid" style="overflow: scroll; height: 635px;">
                             @if(isset($timeline))
                               @foreach($timeline as $t)
                                 <div class="row">

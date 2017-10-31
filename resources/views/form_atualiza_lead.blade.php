@@ -10,8 +10,6 @@
       </h1>
     </section>
 
-
-
     <form action="/lead/update" method="post">
     <!-- Main content -->
     <section class="content">
@@ -182,13 +180,41 @@
                                       </select>
                                     </td>
                                   </tr>
+                                  <tr>
+                                     <td><label>Classificacao da reunião:</label></td>
+                                     <td class="text-center">
+                                         <select class="form-control" name="classificacao_reuniao">
+                                            <option value="null">Selecione</option>
+                                            @if( $lead->classificacao_reuniao == "N/A")
+                                            <option value="N/A" selected>N/A</option>
+                                            @else
+                                            <option value="N/A">N/A</option>
+                                            @endif
+                                            @if( $lead->classificacao_reuniao == "Frio")
+                                            <option value="Frio" selected>Frio</option>
+                                            @else
+                                            <option value="Frio">Frio</option>
+                                            @endif
+                                            @if( $lead->classificacao_reuniao == "Quente")
+                                            <option value="Quente" selected>Quente</option>
+                                            @else
+                                            <option value="Quente">Quente</option>
+                                            @endif
+                                            @if( $lead->classificacao_reuniao == "Muito quente")
+                                            <option value="Muito quente" selected="">Muito quente</option>
+                                            @else
+                                            <option value="Muito quente">Muito quente</option>
+                                            @endif
+                                            </select>
+                                        </td>
+                                     </tr>
                               </table>
                               <hr style="color: #f39c12; background-color: #333;">
                                <b>Observações:</b><br>
                                 <input type="text-area" class="form-control" name="observacoes" value="{{ $lead->observacoes }}" style="height: 70px;">
                                 <br>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,13 +260,13 @@
                                 </div>
                             </div>
                         </div>
-                  </div>  
+                  </div>
                 </div>
                 <div class="box box-warning">
                     <div class="box-header with-border">
                         <h1 class="box-title"><i class="fa fa-commenting"></i> Contato <small>detalhes e informações</small></h1>
                         <div class="box-body">
-                               <div class="container-fluid" style="overflow: scroll; height: 536px;">
+                               <div class="container-fluid" style="overflow: scroll; height: 580px;">
                                   <div class="col-lg-12">
                                   <br>
                                      <div class="table-responsive-fluid">
@@ -286,16 +312,15 @@
                                   </div>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                   </div>
-
                     <button class="btn btn-success pull-right"><i class="fa fa-check"></i> Atualizar lead</button>
                 </div>
             </div>
-        </div>     
+        </div>
     </div>
-    
+
   </section>
 
   </form>

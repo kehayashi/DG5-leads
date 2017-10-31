@@ -103,7 +103,6 @@
           <button type="submit" class="btn btn-success btn-block btn-flat"><i class="fa fa-check"></i> Redefinir</button>
         </div>
 
-
         <!-- /.col -->
       </div>
       <br>

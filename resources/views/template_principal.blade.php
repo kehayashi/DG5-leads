@@ -168,7 +168,7 @@
           </a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-search"></i> Pesquisa de satisfação
+          <a href="#"><i class="fa fa-search"></i> <span>Pesquisa de satisfação</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -194,18 +194,18 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-user"></i> Pré-vendedor</a></li>
-                    <li><a href="#"><i class="fa fa-user"></i> Vendedor
-                          <span class="pull-right-container">
-                             <i class="fa fa-angle-left pull-right"></i>
-                          </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-edit"></i> Propostas</a></li>
-                            <li><a href="#"><i class="fa fa-database"></i> Base</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa fa-user"></i> Diretor</a></li>
+                  <li><a href="#"><i class="fa fa-user"></i> Pré-vendedor</a></li>
+                  <li><a href="#"><i class="fa fa-user"></i> Vendedor
+                      <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                      </a>
+                      <ul class="treeview-menu">
+                          <li><a href="#"><i class="fa fa-edit"></i> Propostas</a></li>
+                          <li><a href="#"><i class="fa fa-database"></i> Base</a></li>
+                      </ul>
+                  </li>
+                  <li><a href="#"><i class="fa fa-user"></i> Diretor</a></li>
               </ul>
             </li>
             <li><a href="/origem"><i class="fa fa-sign-in"></i> Origem</a></li>

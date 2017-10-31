@@ -89,8 +89,8 @@
                                                   <i class="btn btn-danger" style="font-size: 12px; width: 150px;">Reprovada</i>
                                                 @endif
                                                 </td>
-                                                <td class="text-center">R$ {{ $p->valor_total_aprovado }}</td>
-                                                <td class="text-center">R$ {{ $p->valor_total }}</td>
+                                                <td class="text-center">R$ {{ number_format($p->valor_total_aprovado, 2, ',', '.') }}</td>
+                                                <td class="text-center">R$ {{ number_format($p->valor_total, 2, ',', '.') }}</td>
                                                 <td class="text-center">
                                                     <a href="/proposta/download_pdf/{{ $p->proposta_id }}"><i class="fa fa-download" style="font-size: 18px;"></i></a>
                                                 </td>
@@ -135,106 +135,6 @@
             </div>
         </div>
     </div>
-    </div>
-
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Enviar pesquisa de proposta aprovada</h4>
-          </div>
-        <form action="/rede_social/cadastrar/form_lead" method="post">
-            <div class="modal-body">
-            @if (count($errors) > 0)
-               <div class="alert alert-danger">
-                    <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
-            <div class="box box-warning">
-                <div class="box-header with-border">
-                    <h1 class="box-title">Enviar pesquisa <small>informações</small></h1>
-                        <div class="box-body">
-                            <div class="form-group-row">
-                                <div class="col-lg-12">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <b>Email:</b><br>
-                                    <input type="text" class="form-control" name="email_destinatario" value="kehayashi@hotmail.com" disabled><br>
-                                    <b>Mensagem:</b><br>
-                                    <textarea class="form-control" rows="6" cols="50">Olá,
-
-teste teste teste teste teste teste teste teste teste teste.
-teste teste teste teste teste.
-
-Att,
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Enviar</button>
-            </div>
-        </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Enviar pesquisa de proposta reprovada</h4>
-          </div>
-        <form action="/rede_social/cadastrar/form_lead" method="post">
-            <div class="modal-body">
-            @if (count($errors) > 0)
-               <div class="alert alert-danger">
-                    <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
-            <div class="box box-warning">
-                <div class="box-header with-border">
-                    <h1 class="box-title">Enviar pesquisa <small>informações</small></h1>
-                        <div class="box-body">
-                            <div class="form-group-row">
-                                <div class="col-lg-12">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <b>Email:</b><br>
-                                    <input type="text" class="form-control" name="email_destinatario" value="kehayashi@hotmail.com" disabled><br>
-                                    <b>Mensagem:</b><br>
-                                    <textarea class="form-control" rows="6" cols="50">Olá,
-
-teste teste teste teste teste teste teste teste teste teste.
-teste teste teste teste teste.
-
-Att,
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Enviar</button>
-            </div>
-        </form>
-        </div>
-      </div>
     </div>
 
     </section>

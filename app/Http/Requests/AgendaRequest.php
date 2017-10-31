@@ -17,7 +17,7 @@ class AgendaRequest extends FormRequest {
             'hora_inicio' => 'required|not_in:null',
             'hora_fim' => 'required|not_in:null',
             'titulo' => 'required',
-            'checkcor' => 'required'
+            'lead_id' => 'required'
         ];
     }
 
@@ -27,7 +27,7 @@ class AgendaRequest extends FormRequest {
             'data_fim.required' => 'Preencha o campo DATA FIM',
             'hora_inicio.required' => 'Preencha o campo HORA INICIO',
             'hora_fim.required' => 'Preencha o campo HORA FIM',
-            'checkcor.required' => 'Preencha o campo COR',
+            'lead_id.required' => 'Selecione o lead',
         ];
     }
 }

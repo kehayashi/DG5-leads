@@ -17,14 +17,9 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset("/bower_components/adminLTE/plugins/iCheck/square/blue.css") }}">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 <body class="hold-transition login-page" style="height: 10%; background-color: black;">
+
 <div class="login-box">
   <div class="login-logo">
     <a href="#"><img src="{!! asset('dg5-120.png') !!}" style="width: 150px;"></a>
@@ -43,13 +38,13 @@
         <input type="password" class="form-control" name="senha" placeholder="Senha">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      
+
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-12">
           <button type="submit" class="btn btn-warning btn-block btn-flat">Entrar</button>
         </div>
-          
+
           <div class="col-xs-12">
           <br>
            @if(isset($erro))
@@ -66,6 +61,22 @@
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
+
+
+<div class="push"></div>
+<!-- end wraper -->
+
+<footer class="footer">
+  <div class="container text-center">
+    <hr style="border-color: #f39c12;">
+      <small class="text-info" style="font-size: 13px;">
+        <b style="color: gray;">
+          Copyright &copy; 2017 <a href="#" style="color: gray;">Kendy Hayashi</a>.</strong> All rights
+          reserved.
+    	</small>
+	</div>
+</footer>
+
 
 <!-- jQuery 2.2.3 -->
 <script src="{{ asset("/bower_components/adminLTE/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>

@@ -13,6 +13,7 @@ use DB;
 use Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EMail;
+use Session;
 
 Class EquipeController extends Controller {
 

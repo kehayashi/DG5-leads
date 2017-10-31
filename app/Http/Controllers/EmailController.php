@@ -32,40 +32,49 @@ Class EmailController extends Controller {
 		date_default_timezone_set('America/Sao_Paulo');
 		$data = date('Y-m-d H:i:s');
 
-		$proposta = DB::select('SELECT  nome_empresa, CNPJ_CPF, rua, logradouro, cidade, estado, pais, proposta.proposta_id, titulo, validade, data_emissao, situacao,
+		$proposta = DB::select('SELECT nome_empresa, CNPJ_CPF, rua, logradouro, cidade, estado, pais, proposta.proposta_id, proposta.proposta_enviada, titulo, validade, data_emissao, situacao,
 							SUM(CASE WHEN situacao_item = "Aprovado" THEN valor ELSE 0 END) valor_total_aprovado,
 							SUM(valor) valor_total
 							FROM proposta, lead, item, proposta_item
 							WHERE lead.lead_id = proposta.lead_id
 							AND proposta.proposta_id = proposta_item.proposta_id
 							AND proposta_item.item_id = item.item_id
-																AND proposta.proposta_id = '.$proposta_id.'
-							GROUP BY nome_empresa, CNPJ_CPF, rua, logradouro, cidade, estado, pais, proposta.proposta_id, titulo, validade, data_emissao, situacao');
+							AND proposta.proposta_id = '.$proposta_id.'
+							GROUP BY nome_empresa, CNPJ_CPF, rua, logradouro, cidade, estado, pais, proposta.proposta_id, proposta.proposta_enviada, titulo, validade, data_emissao, situacao');
 
 		$itens = DB::select('SELECT item, valor FROM proposta,item, proposta_item
 							where proposta.proposta_id = proposta_item.proposta_id
 							AND proposta_item.item_id = item.item_id
-																AND proposta.proposta_id = '.$proposta_id);
+							AND proposta.proposta_id = '.$proposta_id);
 
 		$pdf = PDF::loadView('info_PDF', ['proposta' => $proposta, 'data' => $data, 'itens' => $itens])
 					->stream();
 
+		$email = DB::select('SELECT email FROM proposta, lead, lead_contato, contato
+							WHERE proposta.lead_id = lead.lead_id
+							AND lead.lead_id = lead_contato.lead_id
+							AND lead_contato.contato_id = contato.contato_id
+							AND proposta.proposta_id = '.$proposta_id);
 		try {
 
-			Mail::send('template_email', ['proposta' => $proposta, 'itens' => $itens, 'data' => $data], function ($m) use ($pdf){
+			Mail::send('template_email', ['proposta' => $proposta, 'itens' => $itens, 'data' => $data], function ($m) use ($pdf, $email){
 				 $m->from('kendyhayashi@gmail.com');
-				 $m->to('kehayashi@hotmail.com')->subject('Proposta DG5');
+				 $m->to($email[0]->email)->subject('Proposta DG5');
 				 $m->attachData($pdf, 'proposta.pdf');
 			  });
 
-				$propostaInfo = DB::select('SELECT  nome_empresa, proposta.proposta_id, titulo, data_emissao, situacao,
+				$propostaInfo = DB::select('SELECT nome_empresa, proposta.proposta_id, proposta.proposta_enviada titulo, data_emissao, situacao,
 												SUM(CASE WHEN situacao_item = "Aprovado" THEN valor ELSE 0 END) valor_total_aprovado,
-												SUM(valor) valor_total
+												SUM(valor) valor_total, proposta_enviada
 												FROM proposta, lead, item, proposta_item
 												WHERE lead.lead_id = proposta.lead_id
 												AND proposta.proposta_id = proposta_item.proposta_id
 												AND proposta_item.item_id = item.item_id
-												GROUP BY nome_empresa, proposta.proposta_id, titulo, data_emissao, situacao');
+												GROUP BY nome_empresa, proposta.proposta_id, proposta.proposta_enviada, titulo, data_emissao, situacao');
+
+				$proposta = Proposta::find($proposta_id);
+				$proposta->proposta_enviada = 'sim';
+				$proposta->save();
 
 			 $enviado = 'ok';
 			 return view('lista_propostas')
@@ -74,14 +83,14 @@ Class EmailController extends Controller {
 
 		} catch (Exception $e) {
 
-				$propostaInfo = DB::select('SELECT  nome_empresa, proposta.proposta_id, titulo, data_emissao, situacao,
+				$propostaInfo = DB::select('SELECT nome_empresa, proposta.proposta_id, proposta.proposta_enviada, titulo, data_emissao, situacao,
 												SUM(CASE WHEN situacao_item = "Aprovado" THEN valor ELSE 0 END) valor_total_aprovado,
 												SUM(valor) valor_total
 												FROM proposta, lead, item, proposta_item
 												WHERE lead.lead_id = proposta.lead_id
 												AND proposta.proposta_id = proposta_item.proposta_id
 												AND proposta_item.item_id = item.item_id
-												GROUP BY nome_empresa, proposta.proposta_id, titulo, data_emissao, situacao');
+												GROUP BY nome_empresa, proposta.proposta_id, proposta.proposta_enviada titulo, data_emissao, situacao');
 
 			 $erro = 'false';
 			 return view('lista_propostas')

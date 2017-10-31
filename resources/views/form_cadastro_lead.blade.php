@@ -27,7 +27,7 @@
                 </div>
             @endif
 
-             @if((old('nome_empresa')) && (count($errors) <= 0))
+            @if((old('nome_empresa')) && (count($errors) <= 0))
                 <div class="alert alert-success">
                     <i class="fa fa-check"></i> <b>Lead da empresa {{ old('nome_empresa') }}</b> foi cadastrado com sucesso!
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -185,7 +185,6 @@
                 </div>
                 <div class="box-body" style="display: none;"></div>
             </div>
-
 
             <div class="box box-warning">
                 <div class="box-header with-border">
